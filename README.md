@@ -1,2 +1,2 @@
 # blog-backend
-blog backend using Django framework
+this is the backend for the Blog demo project.
