@@ -16,23 +16,3 @@ urlpatterns = [
     path('admin/edit/<int:pk>/', EditPost.as_view(), name="editpost"),
     path('admin/delete/<int:pk>/', DeletePost.as_view(), name='deletepost')
 ]
-
-# # router = DefaultRouter()
-# # router.register('', PostViewSet, basename='posts')
-# urlpatterns += router.urls
-
-# router = DefaultRouter()
-# router.register('', PostList, basename='post')
-# urlpatterns = router.urls
-
-
-# urlpatterns = [
-#     path('<int:pk>/', PostDetails.as_view(), name='detailcreate'),
-#     path('', PostList.as_view(), name='listcreate')
-# ]
-
-# urlpatterns = [
-#     path('posts/', PostDetail.as_view(), name='detailcreate'),
-#     path('search/', PostListDetailFilter.as_view(), name='postsearch'),
-#     path('', PostList.as_view(), name='listcreate'),
-# ]

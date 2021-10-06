@@ -1,6 +1,7 @@
 import os
 import django_heroku
 import dj_database_url
+import dotenv
 from decouple import config
 
 from pathlib import Path
@@ -9,12 +10,12 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8gpu=_o6#p=obb56%pb3k=eu!xb_(i=q2+b)@%t%_1jl_3bf1#'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,11 +142,14 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
-CSRF_TRUSTED_ORIGINS = ['localhost:3000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000',
+                         'https://galleryblog-frontend.netlify.app']
+CSRF_TRUSTED_ORIGINS = ['localhost:3000',
+                        'https://galleryblog-frontend.netlify.app']
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://galleryblog-frontend.netlify.app"
 ]
 
 # Default primary key field type
@@ -167,25 +171,13 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': 'SECRET_KEY',
     'VERIFYING_KEY': None,
-    # 'AUDIENCE': None,
-    # 'ISSUER': None,
-    # 'JWK_URL': None,
-    # 'LEEWAY': 0,
 
     'AUTH_HEADER_TYPES': ('JWT'),
-    # 'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-    # 'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
-
-    # 'JTI_CLAIM': 'jti',
-
-    # 'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    # 'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-    # 'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
 django_heroku.settings(locals())
